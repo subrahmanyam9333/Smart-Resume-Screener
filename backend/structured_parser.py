@@ -10,6 +10,12 @@ from backend.section_parser import extract_sections
 
 from backend.skills_parser import extract_skills_from_section
 
+from backend.education_parser import parse_education_section
+
+from backend.experience_parser import parse_experience_section
+
+from backend.project_parser import parse_project_section
+
 
 def parse_resume(text: str) -> CandidateProfile:
     """
@@ -22,11 +28,26 @@ def parse_resume(text: str) -> CandidateProfile:
         sections.get("skills", "")
     )
 
+    education = parse_education_section(
+        sections.get("education", "")
+    )
+
+    experience = parse_experience_section(
+        sections.get("experience", "")
+    )
+
+    projects = parse_project_section(
+        sections.get("projects", "")
+    )
+
     candidate = CandidateProfile(
         name=extract_name(text),
         email=extract_email(text),
         phone=extract_phone(text),
-        skills=skills
+        skills=skills,
+        education=education,
+        experience=experience,
+        projects=projects
     )
 
     return candidate
