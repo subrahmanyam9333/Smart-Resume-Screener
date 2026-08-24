@@ -1,487 +1,488 @@
-📄 Smart Resume Screener
+\# Smart Resume Screening \& Job Matching Platform
 
-AI-powered resume screening and intelligent job matching system.
 
-🚀 Features
 
-Upload multiple PDF resumes
+An automated resume evaluation system that extracts candidate information from PDF resumes and compares applicants against recruiter-defined job requirements.
 
-Extract candidate information from resumes
 
-Extract skills, education, experience, projects, and other details
 
-Define required skills
+The application combines structured resume parsing, rule-based qualification matching, candidate ranking, shortlisting, SQLite persistence, and optional LLM-assisted semantic evaluation.
 
-Define preferred skills
 
-Define required experience
 
-Define required education
+\---
 
-Add a detailed job description
 
-Calculate candidate skill matching scores
 
-Calculate preferred skill matching
+\## ✨ What the Application Does
 
-Calculate experience matching
 
-Calculate education matching
 
-Calculate job description matching
+The system helps recruiters evaluate multiple resumes against a single job opening.
 
-Generate an overall candidate score
 
-Rank candidates automatically
 
-Shortlist candidates using a minimum score
+\### Candidate Processing
 
-Display matched and missing skills
+\- Upload multiple PDF resumes
 
-Display candidate strengths and concerns
+\- Extract candidate names and contact information
 
-Provide candidate match justification
+\- Identify technical and professional skills
 
-FastAPI backend
+\- Extract education details
 
-Streamlit frontend
+\- Extract experience information
 
-Automated test suite
+\- Extract projects, certifications, and achievements
 
-🏗️ Project Structure
+\- Build structured candidate profiles
 
-smart-resume-screener/
-├── backend/
-│   ├── api.py
-│   ├── matcher.py
-│   ├── ranking\_service.py
-│   └── ...
-├── frontend/
-│   └── app.py
-├── models/
-│   └── schemas.py
-├── tests/
-│   ├── test\_matcher.py
-│   ├── test\_batch\_screening\_service.py
-│   ├── test\_screening\_service.py
-│   ├── test\_resume\_parser.py
-│   ├── test\_skills\_parser.py
-│   └── ...
-├── requirements.txt
-└── README.md
 
-⚙️ Technologies
 
-Python
+\### Job Configuration
 
-FastAPI
+Recruiters can specify:
 
-Streamlit
 
-Pydantic
 
-Pytest
+\- Job title
 
-PDF Resume Parsing
+\- Mandatory skills
 
-Rule-based Candidate Matching
+\- Additional/preferred skills
 
-Optional LLM-based Components
+\- Required experience
 
-📊 Matching System
+\- Required educational qualification
 
-The system evaluates candidates using multiple qualification factors.
+\- Detailed job description
 
-Required Skills
+\- Minimum screening score
 
-Required skills form the core candidate matching score.
 
-Example:
+
+\### Candidate Evaluation
+
+Each applicant is evaluated using several criteria:
+
+
+
+\- Mandatory skill coverage
+
+\- Preferred skill coverage
+
+\- Experience compatibility
+
+\- Education compatibility
+
+\- Job-description relevance
+
+\- Overall qualification score
+
+
+
+The results are then ranked automatically and candidates meeting the configured threshold are shortlisted.
+
+
+
+\---
+
+
+
+\## 🧠 Matching Approach
+
+
+
+The screening engine uses a multi-factor evaluation strategy.
+
+
+
+\### 1. Mandatory Skills
+
+
+
+Mandatory skills represent the core technical requirements of a position.
+
+
+
+For example:
+
+
+
+```text
 
 Python, FastAPI, SQL, Docker
 
-The system identifies:
+The system determines:
 
-Matched skills
 
-Missing skills
 
-Required-skill score
+Skills found in the resume
 
-Preferred Skills
+Skills absent from the resume
 
-Preferred skills provide additional qualification information.
+Mandatory-skill matching score
+
+2\. Preferred Skills
+
+
+
+Preferred skills are additional qualifications that can improve a candidate's suitability.
+
+
 
 Example:
+
+
 
 AWS, Git
 
-The system identifies:
 
-Preferred skills matched
 
-Preferred skills missing
+The system reports both matched and unmatched preferred skills.
 
-Experience
 
-The system evaluates an experience requirement such as:
+
+3\. Experience
+
+
+
+A recruiter can specify requirements such as:
+
+
 
 2+ years
 
-It compares the requirement with the candidate's extracted experience information.
 
-Education
 
-The system compares the candidate's education information with the job's education requirement.
+The candidate's extracted experience is compared against the requirement.
+
+
+
+4\. Education
+
+
+
+The system evaluates the candidate's educational background against the specified qualification.
+
+
 
 Example:
 
+
+
 Bachelor's in Computer Science
 
-Job Description
+5\. Job Description Similarity
 
-The system analyzes meaningful terms from the job description and calculates a job-description match score.
 
-🧮 Overall Matching
 
-When additional qualification requirements are provided, the system considers multiple components including:
+Important terms from the complete job description are compared with the candidate information to estimate relevance.
 
-Required skills
 
-Preferred skills
+
+📊 Final Candidate Score
+
+
+
+The final screening result can incorporate:
+
+
+
+Mandatory Skills
+
+&#x20;      +
+
+Preferred Skills
+
+&#x20;      +
 
 Experience
 
+&#x20;      +
+
 Education
 
-Job description
+&#x20;      +
 
-Only the requirements provided by the recruiter are considered in the scoring process.
+Job Description Relevance
 
-When no additional qualification requirements are supplied, the original required-skill matching behaviour is preserved.
+&#x20;      ↓
 
-🏆 Candidate Ranking
+Overall Match Score
 
-Candidates are ranked according to their final match score.
 
-Each candidate result can include:
+
+Only the qualification categories supplied by the recruiter are considered.
+
+
+
+If optional qualification fields are not provided, the system can continue using the core required-skill matching behavior.
+
+
+
+🏆 Candidate Ranking \& Shortlisting
+
+
+
+After evaluation, candidates are ordered according to their final score.
+
+
+
+Each result can contain:
+
+
 
 Candidate name
 
 Resume filename
 
-Match score
+Overall match percentage
 
-Shortlisting status
+Shortlisting decision
 
-Matched skills
+Matched mandatory skills
 
-Missing skills
+Missing mandatory skills
 
-Preferred skills
+Preferred skills matched
 
-Experience match
+Preferred skills missing
 
-Education match
+Experience evaluation
 
-Job description match
+Education evaluation
 
-Strengths
+Job-description relevance
 
-Concerns
+Candidate strengths
 
-Justification
+Potential concerns
 
-🎯 Shortlisting
+Final justification
 
-A minimum score can be specified by the recruiter.
-
-Example:
+Example Threshold
 
 Minimum Score: 60%
 
-Candidates meeting or exceeding the minimum score are shortlisted.
 
-🖥️ Running the Application
 
-1. Create a virtual environment
+Candidates scoring at least the configured threshold are marked as shortlisted.
 
-python -m venv venv
 
-2. Activate the virtual environment
 
-venv\\Scripts\\activate
+🏗️ Application Architecture
 
-3. Install dependencies
 
-pip install -r requirements.txt
 
-4. Start the FastAPI backend
+The application follows a modular frontend-backend architecture.
 
-uvicorn backend.api:app --reload
 
-5. Start the Streamlit frontend
 
-Open another terminal:
+&#x20;                   USER
 
-streamlit run frontend/app.py
+&#x20;                     |
 
-The application normally runs at:
+&#x20;                     v
 
-http://localhost:8501
+&#x20;             Streamlit Interface
 
-🧪 Running Tests
+&#x20;                     |
 
-Run the complete test suite:
+&#x20;                     v
 
-pytest
+&#x20;                FastAPI API
 
-The project currently contains 41 automated tests covering:
+&#x20;                     |
 
-Resume parsing
+&#x20;                     v
 
-Structured parsing
+&#x20;              PDF Text Extraction
 
-Skills parsing
+&#x20;                     |
 
-Education parsing
+&#x20;                     v
 
-Experience parsing
+&#x20;            Structured Resume Data
 
-Project parsing
+&#x20;                     |
 
-Job parsing
+&#x20;            +--------+--------+
 
-Matching
+&#x20;            |                 |
 
-Ranking
+&#x20;            v                 v
 
-Batch screening
+&#x20;       SQLite Storage     Matching Engine
 
-Screening service
+&#x20;                              |
 
-LLM components
+&#x20;                   +----------+----------+
 
-Schema validation
+&#x20;                   |          |          |
 
-🔄 Screening Workflow
+&#x20;                   v          v          v
 
-Upload PDF Resumes
-↓
-Extract Resume Information
-↓
-Create Candidate Profiles
-↓
-Create Job Profile
-↓
-Match Required Skills
-↓
-Match Preferred Skills
-↓
-Evaluate Experience
-↓
-Evaluate Education
-↓
-Evaluate Job Description
-↓
-Calculate Overall Score
-↓
-Rank Candidates
-↓
-Apply Minimum Score
-↓
-Display Screening Results
+&#x20;                Skills    Experience   Education
 
-📌 Example Job
+&#x20;                   |          |          |
 
-Job Title:
-Python Backend Developer
+&#x20;                   +----------+----------+
 
-Required Skills:
-Python, FastAPI, SQL, Docker
+&#x20;                              |
 
-Preferred Skills:
-AWS, Git
+&#x20;                              v
 
-Experience Required:
-2+ years
+&#x20;                   Job Description Match
 
-Education Required:
-Bachelor's in Computer Science
+&#x20;                              |
 
-Minimum Score:
-60%
+&#x20;                              v
 
-📈 Example Screening Result
+&#x20;                   Optional LLM Analysis
 
-Candidate: S. PREM CHAND
+&#x20;                              |
 
-Match Score: 19.1%
+&#x20;                              v
 
-Matched Skills:
-Python
+&#x20;                      Final Candidate Score
 
-Missing Skills:
-Docker
-FastAPI
-SQL
+&#x20;                              |
 
-Preferred Skills Matched:
-Git
+&#x20;                              v
 
-Preferred Skills Missing:
-AWS
+&#x20;                        Ranking Engine
 
-Experience Match:
-0%
+&#x20;                              |
 
-Education Match:
-0%
+&#x20;                              v
 
-Job Description Match:
-16%
+&#x20;                      Shortlist Candidates
 
-🧪 Project Validation
+&#x20;                              |
 
-The application has been tested with different combinations of job requirements, including:
+&#x20;                              v
 
-Required skills only
+&#x20;                        Results Dashboard
 
-Required + preferred skills
-
-Required + experience
-
-Required + education
-
-Required + preferred + experience + education
-
-Job description matching
-
-Multiple PDF resumes
-
-Candidate ranking
-
-Minimum-score shortlisting
-
-The complete automated test suite currently passes successfully.
-
-📌 Project Status
-
-Core functionality: Complete ✅
-
-The Smart Resume Screener currently supports resume uploading, candidate profile extraction, job requirement processing, multi-factor candidate matching, ranking, shortlisting, and result visualization.
-
-Final project activities include UI polishing, documentation, Git finalization, and end-to-end deployment validation.
-
-
-
-\## 🏗️ System Architecture
-
-
-
-The Smart Resume Screener follows a modular client-server architecture.
-
-
-
-User
-
-↓
+🧩 Main Components
 
 Streamlit Frontend
 
-↓
+
+
+Provides the recruiter-facing interface for:
+
+
+
+Entering job requirements
+
+Uploading resumes
+
+Starting screening
+
+Viewing candidate rankings
+
+Reviewing detailed candidate results
 
 FastAPI Backend
 
-↓
 
-PDF Resume Parser
 
-↓
-
-Structured Candidate Profile
-
-↓
-
-SQLite Candidate Database
-
-↓
-
-Job Matching Engine
-
-↓
-
-Optional LLM Semantic Matching
-
-↓
-
-Candidate Ranking
-
-↓
-
-Shortlisting and Justification
-
-↓
-
-Screening Results
+Acts as the application API and coordinates:
 
 
 
-\### Main Components
+Resume uploads
+
+PDF processing
+
+Candidate profile generation
+
+Job profile creation
+
+Screening
+
+Ranking
+
+Database persistence
+
+Resume Processing
 
 
 
-Frontend:
-
-Streamlit is used to collect job requirements, upload resumes, and display screening results.
+PDF resume content is converted into structured information such as:
 
 
 
-Backend:
+Personal Information
 
-FastAPI provides the REST API and coordinates resume processing and screening.
+Skills
 
+Education
 
+Experience
 
-Resume Parser:
+Projects
 
-PDF resumes are converted into structured candidate profiles containing skills, education, experience, projects, certifications, and achievements.
+Certifications
 
+Achievements
 
+Summary
 
-Matching Engine:
-
-The deterministic matching engine evaluates required skills, preferred skills, experience, education, and job-description similarity.
-
-
-
-Database:
-
-SQLite stores parsed candidate information for later retrieval and persistence.
+Matching Engine
 
 
 
-LLM Component:
-
-The project includes an optional OpenAI-based LLM component for semantic resume-job matching and resume information extraction.
+The deterministic matching layer evaluates candidate suitability across the configured requirements.
 
 
 
-\## 🤖 LLM Usage
+SQLite Database
 
 
 
-The LLM component is optional and can provide semantic matching in addition to deterministic rule-based matching.
+Candidate profiles are persisted in:
 
 
 
-The system sends the candidate resume information and job requirements to the LLM and requests a structured evaluation.
+data/resume\_screener.db
+
+LLM Layer
 
 
 
-\### Example LLM Matching Prompt
+An optional OpenAI-based component is included for:
 
 
+
+Semantic resume interpretation
+
+Resume information extraction
+
+Semantic candidate-job matching
+
+
+
+The application does not depend on the LLM component for its basic deterministic screening functionality.
+
+
+
+🤖 Optional LLM Evaluation
+
+
+
+The project includes an optional LLM-based semantic matching component.
+
+
+
+The LLM receives candidate information and job requirements and produces a structured assessment.
+
+
+
+Example Evaluation Prompt
 
 Compare the following candidate resume with the following job description.
 
@@ -539,27 +540,19 @@ Return the result in structured JSON format.
 
 
 
-\### LLM Scoring
+The LLM score can be converted into a percentage and combined with deterministic matching results when LLM screening is enabled.
 
 
 
-The LLM score is converted into a percentage and can be combined with the deterministic matching score.
+🗄️ Candidate Data Persistence
 
 
 
-The deterministic matching system remains available when LLM usage is disabled.
+SQLite is used for persistent candidate storage.
 
 
 
-\## 🗄️ Database Storage
-
-
-
-The application uses SQLite for persistent candidate storage.
-
-
-
-Database:
+Database location:
 
 
 
@@ -567,39 +560,355 @@ data/resume\_screener.db
 
 
 
-The database stores:
+Stored information includes:
 
 
 
-\- Candidate name
+Candidate name
 
-\- Email
+Email
 
-\- Phone
+Phone
 
-\- Skills
+Skills
 
-\- Education
+Education
 
-\- Experience
+Experience
 
-\- Projects
+Projects
 
-\- Certifications
+Certifications
 
-\- Achievements
+Achievements
 
-\- Summary
+Summary
 
-\- Creation timestamp
-
-
-
-Candidate information is automatically stored when resumes are parsed through the backend.
+Creation timestamp
 
 
 
-\## 🔐 Configuration
+Candidate information is stored when resumes are processed through the backend.
+
+
+
+📁 Repository Layout
+
+smart-resume-screener/
+
+│
+
+├── backend/
+
+│   ├── api.py
+
+│   ├── matcher.py
+
+│   ├── ranking\_service.py
+
+│   └── ...
+
+│
+
+├── frontend/
+
+│   └── app.py
+
+│
+
+├── models/
+
+│   └── schemas.py
+
+│
+
+├── tests/
+
+│   ├── test\_matcher.py
+
+│   ├── test\_batch\_screening\_service.py
+
+│   ├── test\_screening\_service.py
+
+│   ├── test\_resume\_parser.py
+
+│   ├── test\_skills\_parser.py
+
+│   └── ...
+
+│
+
+├── data/
+
+│   └── resume\_screener.db
+
+│
+
+├── requirements.txt
+
+└── README.md
+
+🛠️ Technology Stack
+
+Area	Technology
+
+Programming Language	Python
+
+API Layer	FastAPI
+
+User Interface	Streamlit
+
+Data Validation	Pydantic
+
+Database	SQLite
+
+Testing	Pytest
+
+Resume Input	PDF
+
+Core Matching	Rule-based evaluation
+
+Semantic Matching	Optional OpenAI LLM
+
+🚀 Running the Project
+
+Step 1 — Create a virtual environment
+
+python -m venv venv
+
+Step 2 — Activate it
+
+
+
+Windows:
+
+
+
+venv\\Scripts\\activate
+
+Step 3 — Install dependencies
+
+pip install -r requirements.txt
+
+Step 4 — Start the API server
+
+uvicorn backend.api:app --reload
+
+Step 5 — Start the frontend
+
+
+
+Open another terminal:
+
+
+
+streamlit run frontend/app.py
+
+
+
+The Streamlit application normally becomes available at:
+
+
+
+http://localhost:8501
+
+🧪 Automated Testing
+
+
+
+Run the complete test suite with:
+
+
+
+pytest
+
+
+
+The project contains tests covering areas such as:
+
+
+
+Resume parsing
+
+Structured candidate parsing
+
+Skills extraction
+
+Education extraction
+
+Experience extraction
+
+Project extraction
+
+Job parsing
+
+Matching
+
+Ranking
+
+Batch screening
+
+Screening service
+
+LLM components
+
+Schema validation
+
+
+
+The complete automated test suite has been validated successfully.
+
+
+
+🔄 End-to-End Screening Flow
+
+1\. Recruiter enters job requirements
+
+&#x20;               ↓
+
+2\. Recruiter uploads PDF resumes
+
+&#x20;               ↓
+
+3\. Resume text is extracted
+
+&#x20;               ↓
+
+4\. Candidate profiles are generated
+
+&#x20;               ↓
+
+5\. Job requirements are structured
+
+&#x20;               ↓
+
+6\. Mandatory skills are evaluated
+
+&#x20;               ↓
+
+7\. Preferred skills are evaluated
+
+&#x20;               ↓
+
+8\. Experience is evaluated
+
+&#x20;               ↓
+
+9\. Education is evaluated
+
+&#x20;               ↓
+
+10\. Job description relevance is calculated
+
+&#x20;               ↓
+
+11\. Overall score is generated
+
+&#x20;               ↓
+
+12\. Candidates are ranked
+
+&#x20;               ↓
+
+13\. Minimum score is applied
+
+&#x20;               ↓
+
+14\. Results and explanations are displayed
+
+📌 Example Screening Configuration
+
+Position
+
+Python Backend Developer
+
+Required Skills
+
+Python, FastAPI, SQL, Docker
+
+Preferred Skills
+
+AWS, Git
+
+Experience
+
+2+ years
+
+Education
+
+Bachelor's in Computer Science
+
+Minimum Score
+
+60%
+
+📈 Example Result
+
+
+
+One example screening output is:
+
+
+
+Candidate: S. PREM CHAND
+
+
+
+Overall Match: 19.1%
+
+
+
+Matched Skills:
+
+Python
+
+
+
+Missing Skills:
+
+Docker
+
+FastAPI
+
+SQL
+
+
+
+Preferred Skills Matched:
+
+Git
+
+
+
+Preferred Skills Missing:
+
+AWS
+
+
+
+Experience Match:
+
+0%
+
+
+
+Education Match:
+
+0%
+
+
+
+Job Description Match:
+
+16%
+
+
+
+The dashboard also provides strengths, concerns, and an overall justification for the generated result.
+
+
+
+🔐 LLM Configuration
 
 
 
@@ -607,7 +916,7 @@ LLM functionality requires an OpenAI API key.
 
 
 
-The API key should be configured using an environment variable:
+Configure it through the following environment variable:
 
 
 
@@ -615,88 +924,94 @@ OPENAI\_API\_KEY
 
 
 
-The application can also operate using deterministic matching without an LLM API key.
+The deterministic screening pipeline can operate without an LLM API key.
 
 
 
-\## 📦 Deliverables
+✅ Validation
 
 
 
-The project provides:
+The application has been tested across different screening configurations, including:
 
 
 
-\- GitHub repository with development commits
+Mandatory skills only
 
-\- FastAPI backend
+Mandatory + preferred skills
 
-\- Streamlit frontend
+Mandatory skills + experience
 
-\- PDF resume parsing
+Mandatory skills + education
 
-\- Structured candidate extraction
+Combined qualification requirements
 
-\- SQLite database storage
+Job-description matching
 
-\- Multi-factor candidate matching
+Multiple resume uploads
 
-\- Optional LLM semantic matching
+Candidate ranking
 
-\- Candidate ranking
-
-\- Shortlisting
-
-\- Candidate justification
-
-\- Automated test suite
-
-\- README documentation
-
-\- End-to-end demonstration
+Score-based shortlisting
 
 
 
-\## ✅ Final Validation
+Additional validation covers:
 
 
 
-The application has been validated using multiple PDF resumes and different combinations of job requirements.
+PDF processing
+
+Candidate profile generation
+
+Database persistence
+
+Automated tests
+
+Result visualization
+
+🎯 Project Outcome
 
 
 
-Validated functionality includes:
+Smart Resume Screener provides an end-to-end workflow for transforming unstructured PDF resumes into structured candidate profiles and evaluating them against recruiter-defined requirements.
 
 
 
-\- Resume uploading
+The platform combines:
 
-\- PDF parsing
 
-\- Candidate profile extraction
 
-\- Required skill matching
+Resume Parsing
 
-\- Preferred skill matching
+&#x20;     +
 
-\- Experience matching
+Structured Candidate Profiles
 
-\- Education matching
+&#x20;     +
 
-\- Job description matching
+Multi-Factor Matching
 
-\- Candidate ranking
+&#x20;     +
 
-\- Minimum-score shortlisting
+Optional Semantic LLM Analysis
 
-\- Candidate strengths and concerns
+&#x20;     +
 
-\- Candidate justification
+Candidate Ranking
 
-\- SQLite candidate storage
+&#x20;     +
 
-\- Automated tests
+Automated Shortlisting
 
-## 🎥 Demo Video
 
-[Watch the 2–3 Minute Smart Resume Screener Demo](https://drive.google.com/file/d/1hDBMmiBGqEZ4VgJKPPmy8gfXffg2OKe-/view?usp=sharing)
+
+This creates a practical screening workflow that can help recruiters quickly identify candidates who best satisfy a given job specification.
+
+🎥 Demo Video
+
+
+
+Watch the Smart Resume Screener Demo
+
+
