@@ -697,3 +697,6 @@ Validated functionality includes:
 
 \- Automated tests
 
+## 🎥 Demo Video
+
+[Watch the 2–3 Minute Smart Resume Screener Demo](https://drive.google.com/file/d/1hDBMmiBGqEZ4VgJKPPmy8gfXffg2OKe-/view?usp=sharing)
