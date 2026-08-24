@@ -24,6 +24,22 @@ class Project(BaseModel):
     description: Optional[str] = None
     technologies: List[str] = Field(default_factory=list)
 
+class JobProfile(BaseModel):
+    job_title: Optional[str] = None
+
+    required_skills: List[str] = Field(
+        default_factory=list
+    )
+
+    preferred_skills: List[str] = Field(
+        default_factory=list
+    )
+
+    experience_required: Optional[str] = None
+
+    education_required: Optional[str] = None
+
+    description: Optional[str] = None
 
 class CandidateProfile(BaseModel):
     name: Optional[str] = None
