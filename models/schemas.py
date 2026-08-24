@@ -41,6 +41,27 @@ class JobProfile(BaseModel):
 
     description: Optional[str] = None
 
+class MatchResult(BaseModel):
+    score: float = 0.0
+
+    matched_skills: List[str] = Field(
+        default_factory=list
+    )
+
+    missing_skills: List[str] = Field(
+        default_factory=list
+    )
+
+    strengths: List[str] = Field(
+        default_factory=list
+    )
+
+    concerns: List[str] = Field(
+        default_factory=list
+    )
+
+    justification: Optional[str] = None
+
 class CandidateProfile(BaseModel):
     name: Optional[str] = None
     email: Optional[str] = None

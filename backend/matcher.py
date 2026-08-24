@@ -1,4 +1,8 @@
-from models.schemas import CandidateProfile, JobProfile
+from models.schemas import (
+    CandidateProfile,
+    JobProfile,
+    MatchResult,
+)
 
 
 def normalize_skill(skill: str) -> str:
@@ -16,11 +20,6 @@ def calculate_skill_match(
     """
     Calculate how well candidate skills match
     the job requirements.
-
-    Returns:
-        score
-        matched skills
-        missing skills
     """
 
     candidate_skills = {
@@ -58,20 +57,48 @@ def calculate_skill_match(
 def calculate_match(
     candidate: CandidateProfile,
     job: JobProfile,
-) -> dict:
+) -> MatchResult:
     """
-    Calculate the overall local match result.
+    Calculate a deterministic local match result.
     """
 
-    skill_score, matched, missing = (
+    score, matched, missing = (
         calculate_skill_match(
             candidate,
             job,
         )
     )
 
-    return {
-        "score": skill_score,
-        "matched_skills": matched,
-        "missing_skills": missing,
-    }
+    strengths = [
+        f"Candidate matches required skill: {skill}"
+        for skill in matched
+    ]
+
+    concerns = [
+        f"Candidate is missing required skill: {skill}"
+        for skill in missing
+    ]
+
+    if score >= 80:
+        justification = (
+            "Strong match based on required skills."
+        )
+
+    elif score >= 50:
+        justification = (
+            "Moderate match based on required skills."
+        )
+
+    else:
+        justification = (
+            "Low match based on required skills."
+        )
+
+    return MatchResult(
+        score=score,
+        matched_skills=matched,
+        missing_skills=missing,
+        strengths=strengths,
+        concerns=concerns,
+        justification=justification,
+    )

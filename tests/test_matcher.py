@@ -1,4 +1,8 @@
-from models.schemas import CandidateProfile, JobProfile
+from models.schemas import (
+    CandidateProfile,
+    JobProfile,
+    MatchResult,
+)
 
 from backend.matcher import (
     normalize_skill,
@@ -92,8 +96,16 @@ def test_calculate_match():
         job,
     )
 
-    assert result["score"] == 100.0
+    assert isinstance(result, MatchResult)
 
-    assert len(result["matched_skills"]) == 2
+    assert result.score == 100.0
 
-    assert result["missing_skills"] == []
+    assert len(result.matched_skills) == 2
+
+    assert result.missing_skills == []
+
+    assert len(result.strengths) == 2
+
+    assert result.concerns == []
+
+    assert result.justification is not None
