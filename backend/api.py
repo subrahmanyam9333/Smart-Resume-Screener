@@ -237,7 +237,7 @@ async def screen_multiple(
 
         candidate = item.candidate
         match = item.match
-
+        
         results.append({
             "rank": rank,
             "filename": filenames[
@@ -255,13 +255,19 @@ async def screen_multiple(
             "missing_skills": (
                 match.missing_skills
             ),
+            "preferred_matched_skills": (
+                match.preferred_matched_skills
+            ),
+            "preferred_missing_skills": (
+                match.preferred_missing_skills
+            ),
             "strengths": match.strengths,
             "concerns": match.concerns,
             "justification": (
                 match.justification
             )
         })
-
+        
     return {
         "job": job.model_dump(),
         "total_candidates": len(results),

@@ -53,6 +53,40 @@ def calculate_skill_match(
         sorted(missing),
     )
 
+def calculate_preferred_skill_match(
+    candidate: CandidateProfile,
+    job: JobProfile,
+) -> tuple[list[str], list[str]]:
+    """
+    Find preferred skills matched and missing.
+    Does not affect the existing required-skill score.
+    """
+
+    candidate_skills = {
+        normalize_skill(skill)
+        for skill in candidate.skills
+    }
+
+    preferred_skills = {
+        normalize_skill(skill)
+        for skill in job.preferred_skills
+    }
+
+    if not preferred_skills:
+        return [], []
+
+    matched = candidate_skills.intersection(
+        preferred_skills
+    )
+
+    missing = preferred_skills.difference(
+        candidate_skills
+    )
+
+    return (
+        sorted(matched),
+        sorted(missing),
+    )
 
 def calculate_match(
     candidate: CandidateProfile,
@@ -64,6 +98,13 @@ def calculate_match(
 
     score, matched, missing = (
         calculate_skill_match(
+            candidate,
+            job,
+        )
+    )
+
+    preferred_matched, preferred_missing = (
+        calculate_preferred_skill_match(
             candidate,
             job,
         )
@@ -98,6 +139,8 @@ def calculate_match(
         score=score,
         matched_skills=matched,
         missing_skills=missing,
+        preferred_matched_skills=preferred_matched,
+        preferred_missing_skills=preferred_missing,
         strengths=strengths,
         concerns=concerns,
         justification=justification,

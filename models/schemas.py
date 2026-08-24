@@ -54,6 +54,14 @@ class MatchResult(BaseModel):
         default_factory=list
     )
 
+    preferred_matched_skills: List[str] = Field(
+        default_factory=list
+    )
+
+    preferred_missing_skills: List[str] = Field(
+        default_factory=list
+    )
+
     strengths: List[str] = Field(
         default_factory=list
     )
@@ -63,6 +71,7 @@ class MatchResult(BaseModel):
     )
 
     justification: Optional[str] = None
+
 
 class CandidateProfile(BaseModel):
     name: Optional[str] = None

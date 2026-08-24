@@ -109,3 +109,35 @@ def test_calculate_match():
     assert result.concerns == []
 
     assert result.justification is not None
+
+def test_calculate_preferred_skill_match():
+
+    candidate = CandidateProfile(
+        skills=[
+            "Python",
+            "AWS",
+        ]
+    )
+
+    job = JobProfile(
+        required_skills=[
+            "Python",
+        ],
+        preferred_skills=[
+            "AWS",
+            "Docker",
+            "Git",
+        ]
+    )
+
+    from backend.matcher import calculate_preferred_skill_match
+
+    matched, missing = calculate_preferred_skill_match(
+        candidate,
+        job,
+    )
+
+    assert "aws" in matched
+
+    assert "docker" in missing
+    assert "git" in missing
