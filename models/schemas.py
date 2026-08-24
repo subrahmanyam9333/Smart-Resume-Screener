@@ -44,6 +44,8 @@ class JobProfile(BaseModel):
 class MatchResult(BaseModel):
     score: float = 0.0
 
+    llm_score: Optional[float] = None
+
     matched_skills: List[str] = Field(
         default_factory=list
     )
