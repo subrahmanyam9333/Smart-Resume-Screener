@@ -1010,8 +1010,6 @@ This creates a practical screening workflow that can help recruiters quickly ide
 
 🎥 Demo Video
 
-
-
 Watch the Smart Resume Screener Demo
-
+https://drive.google.com/file/d/1RCDG3GwiXK6wWld_q4aMI2sU4qnoyxRb/view?usp=sharing
 
