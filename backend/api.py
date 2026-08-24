@@ -64,7 +64,9 @@ async def screen_resume(
     job_title: str = Form(...),
     required_skills: str = Form(...),
     preferred_skills: str = Form(""),
-    job_description: str = Form("")
+    job_description: str = Form(""),
+    experience_required: str = Form(""),
+    education_required: str = Form("")
 ):
     """
     Screen a resume against a job description.
@@ -114,6 +116,8 @@ async def screen_resume(
             job_title=job_title,
             required_skills=required_skill_list,
             preferred_skills=preferred_skill_list,
+            experience_required=experience_required or None,
+            education_required=education_required or None,
             description=job_description or None
         )
 
@@ -146,7 +150,9 @@ async def screen_multiple(
     required_skills: str = Form(...),
     preferred_skills: str = Form(""),
     job_description: str = Form(""),
-    minimum_score: float = Form(60.0)
+    minimum_score: float = Form(60.0),
+    experience_required: str = Form(""),
+    education_required: str = Form("")
 ):
     """
     Screen multiple resumes against one job
@@ -172,8 +178,10 @@ async def screen_multiple(
         job_title=job_title,
         required_skills=required_skill_list,
         preferred_skills=preferred_skill_list,
+        experience_required=experience_required or None,
+        education_required=education_required or None,
         description=job_description or None
-    )
+    )   
 
     for file in files:
 
@@ -237,7 +245,7 @@ async def screen_multiple(
 
         candidate = item.candidate
         match = item.match
-        
+
         results.append({
             "rank": rank,
             "filename": filenames[
@@ -261,13 +269,31 @@ async def screen_multiple(
             "preferred_missing_skills": (
                 match.preferred_missing_skills
             ),
+            "experience_score": (
+                match.experience_score
+            ),
+            "education_score": (
+                match.education_score
+            ),
+            "experience_match": (
+                match.experience_match
+            ),
+            "education_match": (
+                match.education_match
+            ),
+            "description_score": (
+                match.description_score
+            ),
+            "description_match": (
+                match.description_match
+            ),
             "strengths": match.strengths,
             "concerns": match.concerns,
             "justification": (
                 match.justification
             )
         })
-        
+    
     return {
         "job": job.model_dump(),
         "total_candidates": len(results),

@@ -149,6 +149,16 @@ with col2:
         placeholder="AWS, Git, Linux"
     )
 
+    experience_required = st.text_input(
+        "Experience Required",
+        placeholder="e.g. 2+ years"
+    )
+
+    education_required = st.text_input(
+        "Education Required",
+        placeholder="e.g. Bachelor's in Computer Science"
+    )
+    
     minimum_score = st.number_input(
         "Minimum Score",
         min_value=0.0,
@@ -264,18 +274,13 @@ if screen_button:
 
 
             data = {
-
                 "job_title": job_title,
-
                 "required_skills": required_skills,
-
                 "preferred_skills": preferred_skills,
-
+                "experience_required": experience_required,
+                "education_required": education_required,
                 "job_description": job_description,
-
-                "minimum_score": str(
-                    minimum_score
-                )
+                "minimum_score": minimum_score,
             }
 
 
@@ -536,6 +541,61 @@ if screen_button:
                         ", ".join(preferred_missing)
                     )
 
+                experience_score = candidate.get(
+                    "experience_score",
+                    0.0
+                )
+
+                education_score = candidate.get(
+                    "education_score",
+                    0.0
+                )
+
+                experience_match = candidate.get(
+                    "experience_match"
+                )
+
+                education_match = candidate.get(
+                    "education_match"
+                )
+
+                if experience_match:
+                    st.write(
+                        "**💼 Experience Match**"
+                    )
+
+                    st.write(
+                        f"{experience_score}% — {experience_match}"
+                    )
+
+                if education_match:
+                    st.write(
+                        "**🎓 Education Match**"
+                    )
+
+                    st.write(
+                        f"{education_score}% — {education_match}"
+                    )
+
+                description_score = candidate.get(
+                    "description_score",
+                    0.0
+                )
+
+                description_match = candidate.get(
+                    "description_match"
+                )
+
+                if description_match:
+                    st.write(
+                        "**📝 Job Description Match**"
+                    )
+
+                    st.write(
+                        f"{description_score}% — {description_match}"
+                    )
+
+                
                 # ----------------------------------
                 # Details
                 # ----------------------------------

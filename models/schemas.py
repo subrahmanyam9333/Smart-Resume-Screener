@@ -62,6 +62,17 @@ class MatchResult(BaseModel):
         default_factory=list
     )
 
+    experience_score: float = 0.0
+
+    education_score: float = 0.0
+
+    experience_match: Optional[str] = None
+
+    education_match: Optional[str] = None
+
+    description_score: float = 0.0
+    description_match: Optional[str] = None
+
     strengths: List[str] = Field(
         default_factory=list
     )
