@@ -436,28 +436,21 @@ if screen_button:
                 # Candidate header
                 # ----------------------------------
 
+                # Use Streamlit's native components for the candidate
+                # header instead of raw HTML so the tags can never be
+                # displayed as plain text.
                 st.markdown(
-                    f"""
-                    <div class="candidate-card">
-
-                        <div class="candidate-name">
-                            #{rank} — {name}
-                        </div>
-
-                        <div>
-                            📄 {filename}
-                        </div>
-
-                        <br>
-
-                        <div class="{status_class}">
-                            {status}
-                        </div>
-
-                    </div>
-                    """,
-                    unsafe_allow_html=True
+                    f"### #{rank} — {name}"
                 )
+
+                st.write(
+                    f"📄 {filename}"
+                )
+
+                if is_shortlisted:
+                    st.success(status)
+                else:
+                    st.error(status)
 
 
                 col1, col2 = st.columns(2)
