@@ -54,18 +54,18 @@ smart-resume-screener/
 ├── backend/
 │   ├── api.py
 │   ├── matcher.py
-│   ├── ranking_service.py
+│   ├── ranking\_service.py
 │   └── ...
 ├── frontend/
 │   └── app.py
 ├── models/
 │   └── schemas.py
 ├── tests/
-│   ├── test_matcher.py
-│   ├── test_batch_screening_service.py
-│   ├── test_screening_service.py
-│   ├── test_resume_parser.py
-│   ├── test_skills_parser.py
+│   ├── test\_matcher.py
+│   ├── test\_batch\_screening\_service.py
+│   ├── test\_screening\_service.py
+│   ├── test\_resume\_parser.py
+│   ├── test\_skills\_parser.py
 │   └── ...
 ├── requirements.txt
 └── README.md
@@ -210,7 +210,7 @@ python -m venv venv
 
 2. Activate the virtual environment
 
-venv\Scripts\activate
+venv\\Scripts\\activate
 
 3. Install dependencies
 
@@ -267,29 +267,29 @@ Schema validation
 🔄 Screening Workflow
 
 Upload PDF Resumes
-        ↓
+↓
 Extract Resume Information
-        ↓
+↓
 Create Candidate Profiles
-        ↓
+↓
 Create Job Profile
-        ↓
+↓
 Match Required Skills
-        ↓
+↓
 Match Preferred Skills
-        ↓
+↓
 Evaluate Experience
-        ↓
+↓
 Evaluate Education
-        ↓
+↓
 Evaluate Job Description
-        ↓
+↓
 Calculate Overall Score
-        ↓
+↓
 Rank Candidates
-        ↓
+↓
 Apply Minimum Score
-        ↓
+↓
 Display Screening Results
 
 📌 Example Job
@@ -372,3 +372,328 @@ Core functionality: Complete ✅
 The Smart Resume Screener currently supports resume uploading, candidate profile extraction, job requirement processing, multi-factor candidate matching, ranking, shortlisting, and result visualization.
 
 Final project activities include UI polishing, documentation, Git finalization, and end-to-end deployment validation.
+
+
+
+\## 🏗️ System Architecture
+
+
+
+The Smart Resume Screener follows a modular client-server architecture.
+
+
+
+User
+
+↓
+
+Streamlit Frontend
+
+↓
+
+FastAPI Backend
+
+↓
+
+PDF Resume Parser
+
+↓
+
+Structured Candidate Profile
+
+↓
+
+SQLite Candidate Database
+
+↓
+
+Job Matching Engine
+
+↓
+
+Optional LLM Semantic Matching
+
+↓
+
+Candidate Ranking
+
+↓
+
+Shortlisting and Justification
+
+↓
+
+Screening Results
+
+
+
+\### Main Components
+
+
+
+Frontend:
+
+Streamlit is used to collect job requirements, upload resumes, and display screening results.
+
+
+
+Backend:
+
+FastAPI provides the REST API and coordinates resume processing and screening.
+
+
+
+Resume Parser:
+
+PDF resumes are converted into structured candidate profiles containing skills, education, experience, projects, certifications, and achievements.
+
+
+
+Matching Engine:
+
+The deterministic matching engine evaluates required skills, preferred skills, experience, education, and job-description similarity.
+
+
+
+Database:
+
+SQLite stores parsed candidate information for later retrieval and persistence.
+
+
+
+LLM Component:
+
+The project includes an optional OpenAI-based LLM component for semantic resume-job matching and resume information extraction.
+
+
+
+\## 🤖 LLM Usage
+
+
+
+The LLM component is optional and can provide semantic matching in addition to deterministic rule-based matching.
+
+
+
+The system sends the candidate resume information and job requirements to the LLM and requests a structured evaluation.
+
+
+
+\### Example LLM Matching Prompt
+
+
+
+Compare the following candidate resume with the following job description.
+
+
+
+Evaluate the candidate's suitability on a scale from 1 to 10.
+
+
+
+Consider:
+
+\- Required skills
+
+\- Preferred skills
+
+\- Relevant experience
+
+\- Education
+
+\- Projects
+
+\- Overall relevance
+
+
+
+Return:
+
+\- Match score
+
+\- Matched skills
+
+\- Missing skills
+
+\- Strengths
+
+\- Concerns
+
+\- Short justification
+
+
+
+Candidate Resume:
+
+{resume}
+
+
+
+Job Description:
+
+{job\_description}
+
+
+
+Return the result in structured JSON format.
+
+
+
+\### LLM Scoring
+
+
+
+The LLM score is converted into a percentage and can be combined with the deterministic matching score.
+
+
+
+The deterministic matching system remains available when LLM usage is disabled.
+
+
+
+\## 🗄️ Database Storage
+
+
+
+The application uses SQLite for persistent candidate storage.
+
+
+
+Database:
+
+
+
+data/resume\_screener.db
+
+
+
+The database stores:
+
+
+
+\- Candidate name
+
+\- Email
+
+\- Phone
+
+\- Skills
+
+\- Education
+
+\- Experience
+
+\- Projects
+
+\- Certifications
+
+\- Achievements
+
+\- Summary
+
+\- Creation timestamp
+
+
+
+Candidate information is automatically stored when resumes are parsed through the backend.
+
+
+
+\## 🔐 Configuration
+
+
+
+LLM functionality requires an OpenAI API key.
+
+
+
+The API key should be configured using an environment variable:
+
+
+
+OPENAI\_API\_KEY
+
+
+
+The application can also operate using deterministic matching without an LLM API key.
+
+
+
+\## 📦 Deliverables
+
+
+
+The project provides:
+
+
+
+\- GitHub repository with development commits
+
+\- FastAPI backend
+
+\- Streamlit frontend
+
+\- PDF resume parsing
+
+\- Structured candidate extraction
+
+\- SQLite database storage
+
+\- Multi-factor candidate matching
+
+\- Optional LLM semantic matching
+
+\- Candidate ranking
+
+\- Shortlisting
+
+\- Candidate justification
+
+\- Automated test suite
+
+\- README documentation
+
+\- End-to-end demonstration
+
+
+
+\## ✅ Final Validation
+
+
+
+The application has been validated using multiple PDF resumes and different combinations of job requirements.
+
+
+
+Validated functionality includes:
+
+
+
+\- Resume uploading
+
+\- PDF parsing
+
+\- Candidate profile extraction
+
+\- Required skill matching
+
+\- Preferred skill matching
+
+\- Experience matching
+
+\- Education matching
+
+\- Job description matching
+
+\- Candidate ranking
+
+\- Minimum-score shortlisting
+
+\- Candidate strengths and concerns
+
+\- Candidate justification
+
+\- SQLite candidate storage
+
+\- Automated tests
+
