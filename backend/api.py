@@ -8,7 +8,9 @@ from backend.structured_parser import parse_resume
 from backend.screening_service import ScreeningService
 from models.schemas import JobProfile
 from backend.batch_screening_service import BatchScreeningService
+from backend.database import initialize_database, save_candidate
 
+initialize_database()
 
 app = FastAPI(
     title="Smart Resume Screener",
@@ -97,6 +99,8 @@ async def screen_resume(
 
         # Convert resume text into structured profile
         candidate = parse_resume(text)
+
+        save_candidate(candidate)
 
         # Convert comma-separated skills into lists
         required_skill_list = [
@@ -203,9 +207,8 @@ async def screen_multiple(
             text = extract_text_from_pdf(
                 temp_path
             )
-
             candidate = parse_resume(text)
-
+            save_candidate(candidate)
             candidates.append(candidate)
             filenames.append(file.filename)
 
